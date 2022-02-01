@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import ola.com.booking.helper.UserHelper;
 import ola.com.booking.model.User;
 import ola.com.booking.service.UserService;
 import ola.com.booking.service.impl.UserServiceImpl;
@@ -23,6 +25,8 @@ public class UserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	UserService userService = new UserServiceImpl();
 	
+//	RideService rideService = new RideServiceImpl();
+	
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,18 +39,25 @@ public class UserServlet extends HttpServlet{
 			user.setPhoneNo(req.getParameter("phoneNo"));
 			
 			userService.saveUser(user);
+			
+			/*
+			HttpSession session= req.getSession(true);		
+			session.setAttribute("user",user);
+			*/
 			RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/login.jsp");
 	        rd.forward(req, resp);
 		}
 		
 		if(req.getParameter("action").equals("login")) {
-			boolean isExist = userService.validateUser(req.getParameter("username"), req.getParameter("passowrd"));
+
+			String userId = userService.validateUser(req.getParameter("name"), req.getParameter("password"));
 			//instead of boolean get user object
 			resp.setContentType("text/html;charset=UTF-8");
 	        PrintWriter out = resp.getWriter();
 	        
-			if(isExist) {//user obj null or not
+			if(userId!=null) {//user obj null or not
 				RequestDispatcher rd = req.getRequestDispatcher("routes");
+				req.setAttribute("userId", userId);
 				//send userId also
 	            rd.forward(req, resp);
 			}
@@ -57,6 +68,18 @@ public class UserServlet extends HttpServlet{
 			}
 		}
 		
+		
+//		if(req.getParameter("action").equals("book")) {
+//			System.out.println("entro en BOOK");
+//			Ride ride = new Ride();
+////			ride.setRideId(2);
+//			ride.setDateTime( LocalDateTime.now());
+//			ride.setRouteId(1);
+//			ride.setUserId(1);
+//			rideService.saveRide(ride);
+//
+//			
+//		}
 		
 		
 	}

@@ -8,7 +8,7 @@ public class Ride {
 	private int rideId;
 	private int userId;   //sessionAttribute
 	private int routeId;
-	LocalDateTime dateTime;   //LocalDateTime.now()
+	private LocalDateTime dateTime;   //LocalDateTime.now()
 	
 	public int getRideId() {
 		return rideId;

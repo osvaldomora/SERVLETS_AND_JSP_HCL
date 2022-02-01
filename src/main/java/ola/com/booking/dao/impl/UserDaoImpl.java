@@ -16,14 +16,18 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void saveUser(User user) {
 		try {
-			PreparedStatement stmt = conn.prepareStatement("insert into User (userId, email, name, password, phoneNo) values (?,?,?,?,?)");
-			stmt.setInt(1, user.getuserId());
-			stmt.setString(2, user.getEmail());
-			stmt.setString(3,user.getName());
-			stmt.setString(4, user.getPassword());
-			stmt.setString(5, user.getPhoneNo());
+			PreparedStatement stmt = conn.prepareStatement("insert into User (email, name, password, phoneNo) values (?,?,?,?)");
+//			stmt.setInt(1, user.getuserId());
+			stmt.setString(1, user.getEmail());
+			stmt.setString(2,user.getName());
+			stmt.setString(3, user.getPassword());
+			stmt.setString(4, user.getPhoneNo());
 			
 			stmt.execute();
+			
+			
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,18 +35,30 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean validateUser(String username, String password) {
-		try {
-			PreparedStatement stmt = conn.prepareStatement("SELECT EXISTS(SELECT * FROM User WHERE name=? and password=?)");
+	public String validateUser(String username, String password) {
+		String userId=null;
+		try {System.out.println(username);
+		System.out.println(password);
+			
+			PreparedStatement stmt = conn.prepareStatement("SELECT userId FROM User WHERE name=? and password=?");//SELECT EXISTS(SELECT * FROM User WHERE name=? and password=?)
 		    stmt.setString(1, username);
 		    stmt.setString(2, password);
-		    
-		    return stmt.execute();
+		    ResultSet rs=stmt.executeQuery();
+		    System.out.println("dsssswd");
+		    while(rs.next())
+		    {System.out.println("wwwww");
+		    	userId=rs.getString("userId");
+		    	
+		    }
+		    System.out.println("userId:"+userId);
+		    rs.close();		    
+//		    return   stmt.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
-		return false;
+		return userId;
 	}
 
 }

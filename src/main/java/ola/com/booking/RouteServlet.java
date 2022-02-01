@@ -24,6 +24,8 @@ public class RouteServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//u have userId
+		System.out.println("USERID IN ROUTESERVICE:"+req.getAttribute("userId"));
+		req.setAttribute("userId", req.getAttribute("userId"));
 		req.setAttribute("rList", routeService.getRoutes()); //all rout info + userId
 		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/routeview.jsp");
         rd.forward(req, resp);
