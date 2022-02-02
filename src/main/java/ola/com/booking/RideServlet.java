@@ -39,7 +39,7 @@ public class RideServlet extends HttpServlet {
     	HttpSession session= (HttpSession) request.getSession();
     	User user=(User) session.getAttribute("user");
     	*/
-		System.out.println("BOOK:"+request.getParameter("routeId"));
+		
 		Ride ride = new Ride();
 		ride.setDateTime(LocalDateTime.now());
 		ride.setRouteId(Integer.parseInt(request.getParameter("routeId")));

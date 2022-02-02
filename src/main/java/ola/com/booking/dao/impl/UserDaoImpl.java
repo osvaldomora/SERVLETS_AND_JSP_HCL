@@ -37,20 +37,19 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public String validateUser(String username, String password) {
 		String userId=null;
-		try {System.out.println(username);
-		System.out.println(password);
-			
+		try {
+				
 			PreparedStatement stmt = conn.prepareStatement("SELECT userId FROM User WHERE name=? and password=?");//SELECT EXISTS(SELECT * FROM User WHERE name=? and password=?)
 		    stmt.setString(1, username);
 		    stmt.setString(2, password);
 		    ResultSet rs=stmt.executeQuery();
-		    System.out.println("dsssswd");
+		   
 		    while(rs.next())
-		    {System.out.println("wwwww");
+		    {
 		    	userId=rs.getString("userId");
 		    	
 		    }
-		    System.out.println("userId:"+userId);
+		    
 		    rs.close();		    
 //		    return   stmt.execute();
 		} catch (SQLException e) {

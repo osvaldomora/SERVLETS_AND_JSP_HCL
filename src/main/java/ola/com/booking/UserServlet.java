@@ -9,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import ola.com.booking.helper.UserHelper;
 import ola.com.booking.model.User;
 import ola.com.booking.service.UserService;
 import ola.com.booking.service.impl.UserServiceImpl;
@@ -25,8 +23,7 @@ public class UserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	UserService userService = new UserServiceImpl();
 	
-//	RideService rideService = new RideServiceImpl();
-	
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -57,8 +54,9 @@ public class UserServlet extends HttpServlet{
 	        
 			if(userId!=null) {//user obj null or not
 				RequestDispatcher rd = req.getRequestDispatcher("routes");
-				req.setAttribute("userId", userId);
+				
 				//send userId also
+				req.setAttribute("userId", userId);
 	            rd.forward(req, resp);
 			}
 			else {
